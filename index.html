@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Goldman Sachs & Your Kids' Schools — The Scouse Oracle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f4f0e8;
+    --surface: #edeae0;
+    --ink: #1a1a18;
+    --muted: #7a7a6e;
+    --border: #d4d0c4;
+    --red: #c0392b;
+    --gold: #8a6a1a;
+    --tag-bg: #e4e0d4;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Libre Baskerville', serif;
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  /* Subtle paper texture */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 24px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Masthead */
+  .masthead {
+    border-bottom: 3px solid var(--ink);
+    padding: 32px 0 20px;
+    margin-bottom: 0;
+  }
+
+  .masthead-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .oracle-name {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .oracle-name a {
+    color: var(--red);
+    text-decoration: none;
+  }
+
+  .issue-info {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    text-align: right;
+    line-height: 1.6;
+  }
+
+  .headline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(42px, 8vw, 80px);
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+    margin-bottom: 12px;
+  }
+
+  .headline .red { color: var(--red); }
+
+  .standfirst {
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--ink);
+    border-left: 4px solid var(--red);
+    padding-left: 16px;
+    margin: 20px 0 0;
+    font-style: italic;
+  }
+
+  /* Status bar */
+  .status-bar {
+    background: var(--ink);
+    color: var(--bg);
+    padding: 10px 0;
+    margin-bottom: 40px;
+  }
+
+  .status-inner {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    align-items: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+  }
+
+  .status-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #e8c547;
+    flex-shrink: 0;
+    animation: blink 2s infinite;
+  }
+
+  .dot.red { background: var(--red); animation: none; }
+  .dot.green { background: #5bc45b; animation: none; }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.2; }
+  }
+
+  /* Section rule */
+  .section-rule {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 40px 0 20px;
+  }
+
+  .section-rule span {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  .section-rule::before, .section-rule::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .section-rule::before { display: none; }
+
+  h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+
+  /* Key findings */
+  .findings {
+    margin-bottom: 40px;
+  }
+
+  .finding-card {
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--red);
+    background: var(--surface);
+    padding: 20px 24px;
+    margin-bottom: 1px;
+    opacity: 0;
+    transform: translateX(-8px);
+    animation: slideIn 0.4s forwards;
+  }
+
+  .finding-card:nth-child(1) { animation-delay: 0.1s; }
+  .finding-card:nth-child(2) { animation-delay: 0.2s; }
+  .finding-card:nth-child(3) { animation-delay: 0.3s; }
+  .finding-card:nth-child(4) { animation-delay: 0.4s; }
+  .finding-card:nth-child(5) { animation-delay: 0.5s; }
+
+  @keyframes slideIn {
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .finding-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--red);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .finding-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 0.04em;
+    margin-bottom: 6px;
+    color: var(--ink);
+  }
+
+  .finding-body {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .finding-body strong { color: var(--ink); }
+
+  /* Timeline */
+  .timeline {
+    margin-bottom: 40px;
+    position: relative;
+    padding-left: 24px;
+    border-left: 2px solid var(--border);
+  }
+
+  .timeline-item {
+    margin-bottom: 24px;
+    position: relative;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -30px;
+    top: 6px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--ink);
+  }
+
+  .timeline-item.critical::before {
+    background: var(--red);
+    border-color: var(--red);
+  }
+
+  .timeline-date {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .timeline-event {
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+
+  .timeline-event strong { color: var(--red); }
+
+  /* Contract facts box */
+  .contract-box {
+    background: var(--ink);
+    color: var(--bg);
+    padding: 28px 32px;
+    margin-bottom: 40px;
+  }
+
+  .contract-box .box-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #e8c547;
+    margin-bottom: 16px;
+  }
+
+  .contract-facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+  }
+
+  .fact {
+    border-left: 2px solid #333;
+    padding-left: 14px;
+  }
+
+  .fact-value {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    letter-spacing: 0.04em;
+    color: #e8c547;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .fact-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    line-height: 1.4;
+  }
+
+  /* FOI section */
+  .foi-box {
+    border: 2px solid var(--ink);
+    padding: 24px 28px;
+    margin-bottom: 40px;
+    background: var(--surface);
+  }
+
+  .foi-box .foi-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .foi-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.04em;
+  }
+
+  .foi-status {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    padding: 4px 10px;
+    background: var(--ink);
+    color: #e8c547;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .foi-questions {
+    list-style: none;
+    margin-top: 12px;
+  }
+
+  .foi-questions li {
+    font-size: 14px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    color: var(--ink);
+    display: flex;
+    gap: 12px;
+    align-items: baseline;
+    line-height: 1.5;
+  }
+
+  .foi-questions li:last-child { border-bottom: none; }
+
+  .q-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--red);
+    min-width: 20px;
+    letter-spacing: 0.1em;
+  }
+
+  .foi-note {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 14px;
+    line-height: 1.6;
+  }
+
+  /* MP Letter */
+  .letter-section {
+    margin-bottom: 40px;
+  }
+
+  .letter-box {
+    border: 1px solid var(--border);
+    background: #fff;
+    padding: 32px 36px;
+    font-size: 14px;
+    line-height: 1.8;
+    position: relative;
+  }
+
+  .letter-box::before {
+    content: 'LETTER TEMPLATE';
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    background: var(--bg);
+    padding: 0 8px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+  }
+
+  .letter-field {
+    background: #f0f0e8;
+    border: 1px dashed var(--border);
+    padding: 2px 6px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--gold);
+    display: inline-block;
+  }
+
+  .letter-body p {
+    margin-bottom: 14px;
+  }
+
+  .letter-body ol {
+    margin: 14px 0 14px 20px;
+  }
+
+  .letter-body ol li {
+    margin-bottom: 8px;
+  }
+
+  .copy-btn {
+    margin-top: 20px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    background: var(--ink);
+    color: var(--bg);
+    border: none;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .copy-btn:hover { background: var(--red); }
+
+  .copy-confirm {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--red);
+    margin-top: 8px;
+    display: none;
+  }
+
+  /* Sources */
+  .sources {
+    border-top: 2px solid var(--ink);
+    padding-top: 24px;
+    margin-bottom: 48px;
+  }
+
+  .source-row {
+    display: flex;
+    gap: 14px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    align-items: baseline;
+  }
+
+  .source-row:last-child { border-bottom: none; }
+
+  .src-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--red);
+    min-width: 24px;
+  }
+
+  .src-text { color: var(--muted); line-height: 1.5; }
+  .src-text strong { color: var(--ink); }
+
+  /* Footer */
+  footer {
+    border-top: 3px solid var(--ink);
+    padding: 24px 0 40px;
+  }
+
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .footer-inner a { color: var(--red); text-decoration: none; }
+
+  /* Watch list */
+  .watch-list {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 20px 24px;
+    margin-bottom: 40px;
+  }
+
+  .watch-list ul {
+    list-style: none;
+    margin-top: 10px;
+  }
+
+  .watch-list ul li {
+    font-size: 14px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    color: var(--ink);
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+    line-height: 1.5;
+  }
+
+  .watch-list ul li:last-child { border-bottom: none; }
+
+  .watch-list ul li::before {
+    content: '→';
+    color: var(--red);
+    font-size: 12px;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 600px) {
+    .masthead-top { flex-direction: column; }
+    .issue-info { text-align: left; }
+    .contract-box { padding: 20px; }
+    .letter-box { padding: 20px; }
+    .headline { font-size: 42px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="container">
+    <div class="masthead-top">
+      <span class="oracle-name">The Scouse Oracle — <a href="https://tiktok.com/@thescouseoracle" target="_blank">@thescouseoracle</a></span>
+      <div class="issue-info">
+        Investigation opened: May 2026<br>
+        Status: Active — FOI Pending
+      </div>
+    </div>
+    <div class="headline">Goldman Sachs<br>& Your Kids'<br><span class="red">Schools</span></div>
+    <p class="standfirst">Seven weeks after Goldman Sachs completed its takeover of Mace Consult, the Department for Education signed a school infrastructure contract worth up to £105 million with the same firm — with a 100% uplift clause and no fresh competition required.</p>
+  </div>
+</div>
+
+<div class="status-bar">
+  <div class="container">
+    <div class="status-inner">
+      <div class="status-item"><span class="dot"></span> FOI submitted to DfE — awaiting response</div>
+      <div class="status-item"><span class="dot red"></span> Contract signed: 28 April 2026</div>
+      <div class="status-item"><span class="dot green"></span> Goldman Sachs acquisition completed: 5 March 2026</div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- Key findings -->
+  <div class="section-rule"><span>Key Findings</span></div>
+
+  <div class="findings">
+    <div class="finding-card">
+      <div class="finding-num">Finding 01</div>
+      <div class="finding-title">The Contract</div>
+      <div class="finding-body">On <strong>28 April 2026</strong>, the Secretary of State for Education signed a Technical Advisory Services Appointment with <strong>Mace Consult Limited</strong>. Mace acts as the government's technical adviser and employer's agent on school building projects across England — overseeing the condition and delivery of the school estate.</div>
+    </div>
+
+    <div class="finding-card">
+      <div class="finding-num">Finding 02</div>
+      <div class="finding-title">The Hidden Uplift</div>
+      <div class="finding-body">On paper, the maximum spend is <strong>£26.25 million over two years</strong>. The contract can be extended to four years for up to <strong>£52.5 million</strong>. But buried in the contract is an <strong>'Appointment Value Uplift' clause</strong> allowing the Department to increase the total value by up to <strong>100% of the original contract</strong> — without going back out to fresh competition — as long as the scope hasn't "materially changed." The real ceiling: <strong>£105 million</strong>.</div>
+    </div>
+
+    <div class="finding-card">
+      <div class="finding-num">Finding 03</div>
+      <div class="finding-title">The Ownership Change</div>
+      <div class="finding-body">In <strong>July 2025</strong>, Goldman Sachs agreed to buy a 75% stake in Mace's consulting arm. That takeover <strong>completed on 5 March 2026</strong>. Seven weeks later, the Education Secretary signed this contract. Mace Consult is now a <strong>Goldman Sachs-owned consultancy</strong> with a multi-million pound school infrastructure relationship with the state.</div>
+    </div>
+
+    <div class="finding-card">
+      <div class="finding-num">Finding 04</div>
+      <div class="finding-title">The Contract Knew the Risk</div>
+      <div class="finding-body">The contract itself contains a clause: if there is a <strong>'change of ownership or change in control'</strong> of the consultant, the Department can demand a parent company guarantee or performance bond. The question is whether DfE applied those protections — or simply signed and continued as if nothing had changed.</div>
+    </div>
+
+    <div class="finding-card">
+      <div class="finding-num">Finding 05</div>
+      <div class="finding-title">The Context</div>
+      <div class="finding-body">At the same time, <strong>SEND parents are fighting council by council for basic support</strong>. Schools are fundraising for essentials. Families are told there is no money. Behind the headlines, the Department is locking in a structure where a Goldman Sachs-owned firm can see its school infrastructure payday quietly double — off the back of an existing relationship and a clause hardly anyone will read.</div>
+    </div>
+  </div>
+
+  <!-- Contract facts -->
+  <div class="contract-box">
+    <div class="box-label">Contract at a Glance — Secretary of State for Education / Mace Consult Limited / 28 April 2026</div>
+    <div class="contract-facts">
+      <div class="fact">
+        <div class="fact-value">£26.25m</div>
+        <div class="fact-label">Base contract value (2 years)</div>
+      </div>
+      <div class="fact">
+        <div class="fact-value">£52.5m</div>
+        <div class="fact-label">Maximum with 4-year extension</div>
+      </div>
+      <div class="fact">
+        <div class="fact-value">+100%</div>
+        <div class="fact-label">Uplift clause — no fresh competition</div>
+      </div>
+      <div class="fact">
+        <div class="fact-value">£105m</div>
+        <div class="fact-label">Real ceiling with uplift applied</div>
+      </div>
+      <div class="fact">
+        <div class="fact-value">75%</div>
+        <div class="fact-label">Goldman Sachs stake in Mace Consult</div>
+      </div>
+      <div class="fact">
+        <div class="fact-value">7 weeks</div>
+        <div class="fact-label">Between acquisition completing and contract signing</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Timeline -->
+  <div class="section-rule"><span>Timeline</span></div>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-date">July 2025</div>
+      <div class="timeline-event">Goldman Sachs agrees to acquire a <strong>75% stake</strong> in Mace Consult Limited.</div>
+    </div>
+    <div class="timeline-item critical">
+      <div class="timeline-date">5 March 2026</div>
+      <div class="timeline-event"><strong>Acquisition completes.</strong> Mace Consult becomes a Goldman Sachs-owned consultancy.</div>
+    </div>
+    <div class="timeline-item critical">
+      <div class="timeline-date">28 April 2026 — 7 weeks later</div>
+      <div class="timeline-event">The Secretary of State for Education signs a <strong>Technical Advisory Services Appointment</strong> with Mace Consult. Base value £26.25m. Real ceiling with uplift: <strong>£105m</strong>.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">May 2026</div>
+      <div class="timeline-event">Freedom of Information request submitted to the Department for Education. <strong>Response pending.</strong></div>
+    </div>
+  </div>
+
+  <!-- FOI -->
+  <div class="section-rule"><span>Freedom of Information</span></div>
+
+  <div class="foi-box">
+    <div class="foi-header">
+      <div class="foi-title">FOI Request — Department for Education</div>
+      <div class="foi-status">⏳ Awaiting Response</div>
+    </div>
+    <p style="font-size:14px; color:var(--muted); margin-bottom:12px;">Three questions submitted to the Department for Education under the Freedom of Information Act 2000.</p>
+    <ul class="foi-questions">
+      <li><span class="q-num">Q1</span> When did the Department for Education first become aware that Goldman Sachs had acquired or agreed to acquire a controlling stake in Mace Consult Limited?</li>
+      <li><span class="q-num">Q2</span> Following the change of ownership of Mace Consult Limited, did the Department invoke the change of ownership or change of control clause within the existing or new contract to request a parent company guarantee or performance bond? If not, why not?</li>
+      <li><span class="q-num">Q3</span> Does the Department intend to exercise the contract extension and/or the Appointment Value Uplift clause in the Technical Advisory Services Appointment signed 28 April 2026?</li>
+    </ul>
+    <div class="foi-note">Response due within 20 working days. This page will be updated when a response is received. Reference number to be published on receipt.</div>
+  </div>
+
+  <!-- Watch list -->
+  <div class="section-rule"><span>What to Watch</span></div>
+
+  <div class="watch-list">
+    <p style="font-size:14px; color:var(--muted);">While the FOI response is awaited, these are the questions the public record should be able to answer:</p>
+    <ul>
+      <li>Whether DfE applied the change-of-ownership protections already written into the contract</li>
+      <li>Whether the 100% uplift clause is exercised — and if so, when and on what basis</li>
+      <li>Whether any other DfE contracts with Mace Consult were renewed or extended in the same window following the Goldman Sachs acquisition</li>
+      <li>Whether the Department carried out any due diligence assessment of the change of beneficial ownership before signing on 28 April 2026</li>
+      <li>What school building or refurbishment projects Mace Consult is currently advising on under this and any previous appointments</li>
+    </ul>
+  </div>
+
+  <!-- MP Letter -->
+  <div class="section-rule"><span>Write to Your MP</span></div>
+
+  <div class="letter-section">
+    <p style="font-size:14px; color:var(--muted); margin-bottom:20px;">You can write to your local MP asking them to raise these questions with the Education Secretary. Copy the template below, fill in your details, and send it via <a href="https://www.writetothem.com" target="_blank" style="color:var(--red);">writetothem.com</a>.</p>
+
+    <div class="letter-box" id="letterContent">
+      <div class="letter-body">
+        <p>Dear <span class="letter-field">[MP's Name]</span>,</p>
+
+        <p>I am writing to ask you to raise a matter of public concern with the Secretary of State for Education regarding a contract recently awarded to Mace Consult Limited.</p>
+
+        <p>On 28 April 2026 — seven weeks after Goldman Sachs completed its acquisition of a 75% stake in Mace Consult — the Department for Education signed a Technical Advisory Services Appointment with Mace Consult for school building and infrastructure work across England. The contract has a base value of £26.25 million, extendable to £52.5 million over four years, with an additional 'Appointment Value Uplift' clause allowing the total to be increased by a further 100% without fresh competition. The real ceiling of this contract is therefore £105 million.</p>
+
+        <p>The contract itself contains a provision allowing the Department to demand a parent company guarantee or performance bond in the event of a change of ownership. I would like to know whether this protection was applied.</p>
+
+        <p>I would be grateful if you could ask the Secretary of State for Education the following questions:</p>
+
+        <ol>
+          <li>When did the Department first become aware of the Goldman Sachs acquisition of Mace Consult, and was this taken into account before the contract was signed on 28 April 2026?</li>
+          <li>Did the Department invoke the change of ownership clause in the contract to seek a parent company guarantee or performance bond following the Goldman Sachs acquisition? If not, why not?</li>
+          <li>Does the Department intend to exercise the contract extension and/or the 100% Appointment Value Uplift clause, and if so, on what basis and subject to what scrutiny?</li>
+        </ol>
+
+        <p>At a time when schools are fundraising for basic resources and SEND families are fighting for support, the public deserves to know how contracts of this scale are managed when the ownership of a supplier changes hands.</p>
+
+        <p>Thank you for your time.</p>
+
+        <p>Yours sincerely,<br><span class="letter-field">[Your Name]</span><br><span class="letter-field">[Your Address]</span></p>
+      </div>
+    </div>
+    <button class="copy-btn" onclick="copyLetter()">Copy Letter Text</button>
+    <div class="copy-confirm" id="copyConfirm">Copied to clipboard.</div>
+  </div>
+
+  <!-- Sources -->
+  <div class="section-rule"><span>Primary Sources</span></div>
+
+  <div class="sources">
+    <div class="source-row">
+      <span class="src-num">01</span>
+      <span class="src-text"><strong>Technical Advisory Services Appointment — Secretary of State for Education / Mace Consult Limited</strong>, signed 28 April 2026. Primary contract document. Source: Find a Tender / Contracts Finder.</span>
+    </div>
+    <div class="source-row">
+      <span class="src-num">02</span>
+      <span class="src-text"><strong>Goldman Sachs acquisition of 75% stake in Mace Consult Limited</strong> — agreed July 2025, completed 5 March 2026. Source: Companies House / published corporate announcements.</span>
+    </div>
+    <div class="source-row">
+      <span class="src-num">03</span>
+      <span class="src-text"><strong>Appointment Value Uplift clause</strong> — contained within the contract document permitting up to 100% increase on original contract value without fresh competition, subject to scope assessment.</span>
+    </div>
+    <div class="source-row">
+      <span class="src-num">04</span>
+      <span class="src-text"><strong>Change of ownership / change of control clause</strong> — contained within the contract document permitting DfE to demand parent company guarantee or performance bond on change of control of the consultant.</span>
+    </div>
+    <div class="source-row">
+      <span class="src-num">05</span>
+      <span class="src-text"><strong>Freedom of Information request to Department for Education</strong>, submitted May 2026. Response pending. This page will be updated on receipt.</span>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div>© The Scouse Oracle — receipts before camera, perspective before reaction</div>
+      <div><a href="https://tiktok.com/@thescouseoracle" target="_blank">@thescouseoracle</a> · <a href="https://substack.com/@thescouseoracle" target="_blank">Substack ↗</a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+function copyLetter() {
+  const el = document.getElementById('letterContent');
+  const text = el.innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    const confirm = document.getElementById('copyConfirm');
+    confirm.style.display = 'block';
+    setTimeout(() => confirm.style.display = 'none', 3000);
+  });
+}
+</script>
+
+</body>
+</html>
